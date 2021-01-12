@@ -4,7 +4,7 @@ from random import randrange
 import os
 pygame.init()
 width = 500
-win = pygame.display.set_mode((width, 520))
+win = pygame.display.set_mode((width+20, 520))
 pygame.display.set_caption("snakeee")
 run = True
 clock = pygame.time.Clock()
@@ -79,12 +79,6 @@ class snake(object):
             heads = pygame.transform.rotate(head, 90)
             heads = pygame.transform.flip(heads, False, True)
 
-        if self.x > 525 or self.x < 0:
-            self.direction = 0
-
-        if self.y > 525 or self.y < 0:
-            self.direction = 0
-
         self.hitbox = [self.x, self.y, 25, 25]
 
         for i in range(len(self.snake_body)):
@@ -98,11 +92,14 @@ class snake(object):
 
         win.blit(heads, (self.snake_body[0][0], self.snake_body[0][1]))
 
-        if self.x >= 500 or self.y >= 500:
+        if self.x >= 509 or self.y >= 509:
             self.run = False
+            self.direction = 0
 
-        elif self.x <= 0 or self.y <= 0:
+        elif self.x+20 <= 0 or self.y+20 <= 0:
             self.xman += 1
+            self.direction = 0
+
             if self.xman == 3:
                 self.run = False
                 self.xman = 0
