@@ -16,6 +16,8 @@ font = pygame.font.SysFont('C:\Windows\Fonts\Arial.ttf', 30, True)
 foods = pygame.image.load(os.path.dirname(__file__) + 'Food.png')
 head = pygame.image.load(os.path.dirname(__file__)+'snake head.png')
 heads = head
+
+
 def istuching(ob1, ob2):
 
     if ob1[0]+ob1[2] > ob2[0] and ob1[0] < ob2[0]+ob2[3] and ob1[1]+ob1[3] > ob2[1] and ob1[1] < ob2[1]+ob2[3]:
@@ -68,8 +70,8 @@ class snake(object):
             heads = pygame.transform.flip(head, False, False)
         if self.direction == 4:
             self.x -= self.vel
-            heads=pygame.transform.flip(head,True,False)
-            #heads=pygame.transform.rotate(head,180)
+            heads = pygame.transform.flip(head, True, False)
+            # heads=pygame.transform.rotate(head,180)
         if self.direction == 1:
             self.y -= self.vel
             heads = pygame.transform.rotate(head, 90)
