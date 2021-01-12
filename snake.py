@@ -1,9 +1,10 @@
 import pygame
 from time import sleep
 from random import randrange
+import os
 pygame.init()
 width = 500
-win = pygame.display.set_mode((width,520))
+win = pygame.display.set_mode((width, 520))
 pygame.display.set_caption("snakeee")
 run = True
 clock = pygame.time.Clock()
@@ -12,9 +13,9 @@ snakelen = 1
 snake_body = []
 font = pygame.font.SysFont('C:\Windows\Fonts\Arial.ttf', 30, True)
 # ob1[1],ob1[0],ob1[2],ob1[3],ob2[1],ob2[0],ob2[2],ob2[3]
-foods=pygame.image.load(r'C:\Users\vvrao\OneDrive\Desktop\sinnik_school\code\snakee\Food.png')
-head=pygame.image.load(r'C:\Users\vvrao\OneDrive\Desktop\sinnik_school\code\snakee\snake head.png')
-heads=head
+foods = pygame.image.load(os.path.dirname(__file__) + 'Food.png')
+head = pygame.image.load(os.path.dirname(__file__)+'snake head.png')
+heads = head
 def istuching(ob1, ob2):
 
     if ob1[0]+ob1[2] > ob2[0] and ob1[0] < ob2[0]+ob2[3] and ob1[1]+ob1[3] > ob2[1] and ob1[1] < ob2[1]+ob2[3]:
@@ -59,25 +60,25 @@ class snake(object):
 
     def draw(self, win):
         if self.direction == 0:
-            heads=pygame.transform.rotate(head,90)
-            heads=pygame.transform.flip(head,False,True)
+            heads = pygame.transform.rotate(head, 90)
+            heads = pygame.transform.flip(head, False, True)
         if self.direction == 2:
             self.x += self.vel
-            #heads=pygame.transform.rotate(head,0)
-            heads=pygame.transform.flip(head,False,False)
+            # heads=pygame.transform.rotate(head,0)
+            heads = pygame.transform.flip(head, False, False)
         if self.direction == 4:
             self.x -= self.vel
             heads=pygame.transform.flip(head,True,False)
             #heads=pygame.transform.rotate(head,180)
         if self.direction == 1:
             self.y -= self.vel
-            heads=pygame.transform.rotate(head,90)
-            
-            #heads=pygame.transform.rotate(head,90)
+            heads = pygame.transform.rotate(head, 90)
+
+            # heads=pygame.transform.rotate(head,90)
         if self.direction == 3:
             self.y += self.vel
-            heads=pygame.transform.rotate(head,90)
-            heads=pygame.transform.flip(heads,False,True)
+            heads = pygame.transform.rotate(head, 90)
+            heads = pygame.transform.flip(heads, False, True)
         if self.x > 525 or self.x < 0:
             self.direction = 0
 
@@ -97,13 +98,11 @@ class snake(object):
                     self.run = False
 
         for i in range(len(self.snake_body)):
-            
+
             sai = self.snake_body[i]
             pygame.draw.rect(win, (0, 200, 0), pygame.Rect(
-                sai[0], sai[1], self.height, self.width,radius=3))
-            
-        
-        
+                sai[0], sai[1], self.height, self.width, radius=3))
+
         win.blit(heads, (self.snake_body[0][0], self.snake_body[0][1]))
         #pygame.draw.rect(win, (0, 200, 0), pygame.Rect(self.x, self.y, self.height, self.width))
 
@@ -127,16 +126,17 @@ class food(object):
         self.x = randrange(0, 500, 25)
         self.y = randrange(0, 500, 25)
         self.hitbox = [self.x, self.y, 25, 25]
-        self.r=0
+        self.r = 0
+
     def draw(self, win):
-        if self.r>=360: self.r=0
-        self.r+=15
-        foodss=pygame.transform.rotate(foods,self.r)
+        if self.r >= 360:
+            self.r = 0
+        self.r += 15
+        foodss = pygame.transform.rotate(foods, self.r)
         win.blit(foodss, (self.x, self.y))
        # pygame.draw.rect(win, (255, 0, 0), pygame.Rect(self.x, self.y, 25, 25,radius=4))
         self.hitbox = [self.x, self.y, 25, 25]
-        #pygame.transform.rotate(foods,180)
-        
+        # pygame.transform.rotate(foods,180)
 
     def remove(self):
         self.x = randrange(0, 500, 25)
@@ -151,10 +151,10 @@ snacks = food()
 def redraw(win):
 
     # pygame.draw.rect(win,(0,200,0),pygame.Rect(200,200,25,25))
-    win.fill((0,0,0))
-    
-    txt = font.render('score:' + str(snakee.score), 1, (222,40,0))
-    win.fill((255,255,255))
+    win.fill((0, 0, 0))
+
+    txt = font.render('score:' + str(snakee.score), 1, (222, 40, 0))
+    win.fill((255, 255, 255))
     snacks.draw(win)
     snakee.draw(win)
     pygame.display.update()
@@ -163,10 +163,10 @@ def redraw(win):
 i = 0
 while run:
     keys = pygame.key.get_pressed()
-    
+
     if snakee.run == False:
         sleep(5)
-        tex=font.render('RIP you died', 1, (225, 225, 0))
+        tex = font.render('RIP you died', 1, (225, 225, 0))
         text = font.render('score: ' + str(snakee.score) +
                            ' press space to play again', 1, (225, 225, 0))
         win.blit(text, (10, 35))
