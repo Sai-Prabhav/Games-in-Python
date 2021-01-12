@@ -12,17 +12,13 @@ clock = pygame.time.Clock()
 snakelen = 1
 snake_body = []
 font = pygame.font.SysFont('Arial.ttf', 30, True)
-# ob1[1],ob1[0],ob1[2],ob1[3],ob2[1],ob2[0],ob2[2],ob2[3]
 print(os.path.dirname(__file__))
-foods = pygame.image.load(os.path.dirname(__file__) + '\Food.png')
-head = pygame.image.load(os.path.dirname(__file__)+'\snake head.png')
-heads = head
+foods = pygame.image.load(os.path.dirname(__file__) + '/Food.png')
+head = heads = pygame.image.load(os.path.dirname(__file__)+'/snake head.png')
 
 
 def istuching(ob1, ob2):
-
     if ob1[0]+ob1[2] > ob2[0] and ob1[0] < ob2[0]+ob2[3] and ob1[1]+ob1[3] > ob2[1] and ob1[1] < ob2[1]+ob2[3]:
-
         return True
     else:
         return False
@@ -65,10 +61,11 @@ class snake(object):
         if self.direction == 0:
             heads = pygame.transform.rotate(head, 90)
             heads = pygame.transform.flip(head, False, True)
+
         if self.direction == 2:
             self.x += self.vel
-
             heads = pygame.transform.flip(head, False, False)
+
         if self.direction == 4:
             self.x -= self.vel
             heads = pygame.transform.flip(head, True, False)
@@ -81,6 +78,7 @@ class snake(object):
             self.y += self.vel
             heads = pygame.transform.rotate(head, 90)
             heads = pygame.transform.flip(heads, False, True)
+
         if self.x > 525 or self.x < 0:
             self.direction = 0
 
@@ -89,28 +87,21 @@ class snake(object):
 
         self.hitbox = [self.x, self.y, 25, 25]
 
-        self.hitbox = [self.x, self.y, 25, 25]
-
         for i in range(len(self.snake_body)):
-
             if i > 0:
-                sai = self.snake_body[i]
-
-                if istuching(self.hitbox, sai):
+                if istuching(self.hitbox, self.snake_body[i]):
                     self.run = False
 
-        for i in range(len(self.snake_body)):
-
-            sai = self.snake_body[i]
+        for i in range(len(self.snake_body[1:])):
             pygame.draw.rect(win, (0, 200, 0), pygame.Rect(
-                sai[0], sai[1], self.height, self.width, radius=3))
+                self.snake_body[i+1][0], self.snake_body[i+1][1], self.height, self.width))
 
         win.blit(heads, (self.snake_body[0][0], self.snake_body[0][1]))
 
-        if self.x >= 500 or self.y >= 525:
+        if self.x >= 500 or self.y >= 500:
             self.run = False
 
-        elif self.x+25 == 0 or self.y == -25:
+        elif self.x <= 0 or self.y <= 0:
             self.xman += 1
             if self.xman == 3:
                 self.run = False
@@ -144,36 +135,38 @@ class food(object):
         self.hitbox = [self.x, self.y, 25, 25]
 
 
-snakee = snake(width/2, width/2, 25, 25)
-snacks = food()
-
-
 def redraw(win):
 
-    win.fill((0, 0, 0))
-
-    txt = font.render('score:' + str(snakee.score), 1, (222, 40, 0))
     win.fill((255, 255, 255))
+    pygame.draw.rect(win, (255, 0, 0), pygame.Rect(0, 500, 500, 20))
+    txt = font.render('score:' + str(snakee.score), 1, (0, 0, 0))
+    win.blit(txt, (20, 500))
     snacks.draw(win)
     snakee.draw(win)
     pygame.display.update()
 
 
+def out():
+    sleep(0.5)
+    tex = font.render('RIP you died', 1, (225, 225, 0))
+    text = font.render('score: ' + str(snakee.score) +
+                       ' press space to play again', 1, (225, 225, 0))
+    win.blit(text, (10, 35))
+    win.blit(tex, (10, 10))
+    pygame.display.update()
+    if keys[pygame.K_SPACE]:
+        snakee.run == True
+        snakee.restart()
+
+
+snakee = snake(width/2, width/2, 25, 25)
+snacks = food()
 i = 0
 while run:
     keys = pygame.key.get_pressed()
 
     if snakee.run == False:
-        sleep(0.5)
-        tex = font.render('RIP you died', 1, (225, 225, 0))
-        text = font.render('score: ' + str(snakee.score) +
-                           ' press space to play again', 1, (225, 225, 0))
-        win.blit(text, (10, 35))
-        win.blit(tex, (10, 10))
-        pygame.display.update()
-        if keys[pygame.K_SPACE]:
-            snakee.run == True
-            snakee.restart()
+        out()
 
     clock.tick(5)
 
@@ -186,7 +179,6 @@ while run:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP] and not(snakee.direction == 3):
-
         snakee.direction = 1
     if keys[pygame.K_RIGHT] and not(snakee.direction == 4):
         snakee.direction = 2
@@ -194,7 +186,6 @@ while run:
         snakee.direction = 3
     if keys[pygame.K_LEFT] and not(snakee.direction == 2):
         snakee.direction = 4
-
     if istuching(snakee.hitbox, snacks.hitbox):
         snacks.remove()
         snakee.grow()
