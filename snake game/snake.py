@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 #bg = pygame.image.load(r'C:\Users\CSC\Desktop\my code\sankeeeee\bg.jpg')
 snakelen = 1
 snake_body = []
-font = pygame.font.SysFont('Arial.ttf', 30, True)
+font = pygame.font.SysFont('Times New Roman.ttf', 30, True)
 print(os.path.dirname(__file__))
 foods = pygame.image.load(os.path.dirname(__file__) + '/Food.png')
 head = heads = pygame.image.load(os.path.dirname(__file__)+'/snake head.png')
