@@ -37,6 +37,10 @@ def button(surf, tex, posit, width, height, activeColor, inactiveColor, action, 
 def message():
     print('hi')
 
+def drawall(list):
+    for things in list:
+        things.draw()
+    pygame.display.update()
 
 run = True
 
