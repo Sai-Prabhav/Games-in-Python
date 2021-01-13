@@ -1,3 +1,4 @@
+import pygame
 def inthebox(posofbox, poscus, wid, heig):
     if posofbox[1] <= poscus[1] and posofbox[0] <= poscus[0] and poscus[0] < posofbox[0]+wid and poscus[1] < posofbox[1]+heig:
         return True
