@@ -1,1 +1,1 @@
-# snakee
+# Games in Python
