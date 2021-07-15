@@ -25,6 +25,7 @@ class cbox():
         self.score=0
 
     def draw(self,surface,click):
+        
         button(surface,'Click Me',(self.x,self.y),self.width,self.height,(0,255,255),(0,150,200),self.replace,normalfont,click)
         txt = normalfont.render('score:' + str(self.score), 1, (0, 0, 0))
         win.blit(txt, (20, 20))
