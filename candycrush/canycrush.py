@@ -1,6 +1,7 @@
 import random
 import copy
 import time
+import re
 from typing import List, Union
 
 
@@ -22,7 +23,7 @@ class array_2D:
     def __str__(self):
         res = ""
         for row in self.matrix:
-            res += " ".join(row)+"\n"
+            res += "".join(row)+"\n"
         return res
 
     def transpose_matrix(self):
@@ -54,6 +55,17 @@ class candycrush:
     def __str__(self):
         return str(self.matrix)
 
+    def bust(self):
+        rex = re.compile(r"(@{3,}|#{3,}|\${3,}|\*{3,})")
+        str_matrix = ""
+        for i in rex.finditer(str(self.matrix)):
+            str_matrix += str(self.matrix)[len(
+                str_matrix):i.regs[0][0]]+" "*(i.regs[0][1]-i.regs[0][0])
+        
+        str_matrix +=  str(self.matrix)[len(str_matrix):]
+        return str_matrix 
 
-candycrushh = candycrush(10, 10)
-print(candycrushh)
+
+my_candy = candycrush(10, 10)
+print(my_candy)
+print(my_candy.bust())
