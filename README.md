@@ -1,2 +1,3 @@
 # Games in Python
-Games made only using Python
+These are the games made only using Python
+
