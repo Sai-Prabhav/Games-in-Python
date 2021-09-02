@@ -29,22 +29,23 @@ class body():
         print("done")
 
     def draw(self):
-        
+
         for x, row in enumerate(self.cellma):
             for y, cell in enumerate(row):
                 self.nebma[x][y] = cell.neb()
 
-        for x,rowneb in enumerate(self.nebma):
-            for y,cellneb in enumerate(rowneb):
-                if cellneb==3:
-                    self.cellma[x][y].IsAlive=True
-                    
+        for x, rowneb in enumerate(self.nebma):
+            for y, cellneb in enumerate(rowneb):
+                if cellneb == 3:
+                    self.cellma[x][y].IsAlive = True
+
                 elif cellneb != 2:
                     self.cellma[x][y].IsAlive = False
         for x, row in enumerate(self.cellma):
             for y, cell in enumerate(row):
                 cell.draw()
-        print("draw")
+        # print("draw")
+
     class cell():
         def __init__(self, IsAlive, cords, cellma):
             self.cellma = cellma
@@ -60,15 +61,16 @@ class body():
 
         def neb(self):
             neb = 0
-            neblist = [[self.x-1, self.y-1], [self.x, self.y-1], [self.x-1, self.y], [self.x+1, self.y + 1], [self.x, self.y+1], [self.x+1, self.y], [self.x-1, self.y+1], [self.x+1, self.y-1]]
+            neblist = [[self.x-1, self.y-1], [self.x, self.y-1], [self.x-1, self.y], [self.x+1, self.y + 1],
+                       [self.x, self.y+1], [self.x+1, self.y], [self.x-1, self.y+1], [self.x+1, self.y-1]]
 
             for nbe in neblist:
                 try:
                     neb += self.cellma[nbe[0]][nbe[1]].IsAlive
                 except:
-                    
+
                     continue
-            print(neb)
+            # print(neb)
             return neb
 
         def draw(self):
@@ -84,27 +86,17 @@ class body():
 bodyy = body((50, 50))
 
 
-def st(function):
-    print(time.time())
-    start = time.time()
-    function()
-    end = time.time()
-    print(f"it took {end-start} sec")
-
-
-
 def demon():
-        screen.fill((255, 250, 200))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-        bodyy.draw()
-        pygame.display.update()
-        fpsClock.tick(30)
+    screen.fill((255, 250, 200))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    bodyy.draw()
+    pygame.display.update()
+    fpsClock.tick(30)
+
 
 while True:
-    start = time.time()
+    # start = time.time()
     demon()
-    end = time.time()
-    print(f"it took {end-start} sec")
